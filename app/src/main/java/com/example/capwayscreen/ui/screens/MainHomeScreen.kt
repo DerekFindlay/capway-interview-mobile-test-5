@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.example.capwayscreen.R
 import com.example.capwayscreen.models.ListItem
 import com.example.capwayscreen.repos.MockRepo
+import com.example.capwayscreen.ui.menu_categories.Categories
 import com.example.capwayscreen.ui.menu_categories.getAllSelectionCategories
 
 /*
@@ -40,7 +42,6 @@ import com.example.capwayscreen.ui.menu_categories.getAllSelectionCategories
 fun AccountScreen() {
     Scaffold {
         TopNavScrollMenu()
-        AccountBalance()
         TransactionTabs()
     }
 }
@@ -86,7 +87,7 @@ fun AccountBalance() {
                     text = "CapWay Card",
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp,
-                    textAlign = TextAlign.Right,
+                    textAlign = TextAlign.Left,
                     modifier = Modifier.offset(10.dp, 0.dp)
                 )
             }
@@ -98,9 +99,10 @@ fun AccountBalance() {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.cardlg),
-                    contentDescription = "Credit card Image"
+                    contentDescription = "Credit card Image",
+                    modifier = Modifier.weight(2f, true)
                 )
-                Box {
+                Box(modifier = Modifier.weight(3f, true)) {
                     Text(
                         text = "Card 2888 is inactive",
                         fontSize = 15.sp,
@@ -119,7 +121,6 @@ fun AccountBalance() {
 
 @Composable
 fun TopNavScrollMenu() {
-
     var selectedItem by remember {
         mutableStateOf("Transactions")
     }
@@ -128,6 +129,7 @@ fun TopNavScrollMenu() {
     }
 
     Column {
+
         Spacer(modifier = Modifier.padding(2.dp))
         Row(
             horizontalArrangement = Arrangement.Start,
@@ -183,7 +185,23 @@ fun TopNavScrollMenu() {
             }
         }
     }
+    SelectSrollMenuView(selectedItem = selectedItem)
 }
+
+@Composable
+fun SelectSrollMenuView(selectedItem: String) {
+    when (selectedItem) {
+        Categories.TRANSACTIONS.value -> {
+            AccountBalance()
+        }
+        else -> {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+
+            }
+        }
+    }
+}
+
 
 @Composable
 fun TransactionTabs() {
