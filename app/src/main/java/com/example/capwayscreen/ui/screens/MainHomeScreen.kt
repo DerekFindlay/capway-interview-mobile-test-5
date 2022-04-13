@@ -14,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
@@ -129,7 +128,6 @@ fun TopNavScrollMenu() {
     }
 
     Column {
-
         Spacer(modifier = Modifier.padding(2.dp))
         Row(
             horizontalArrangement = Arrangement.Start,
@@ -185,17 +183,21 @@ fun TopNavScrollMenu() {
             }
         }
     }
-    SelectSrollMenuView(selectedItem = selectedItem)
+    SelectScrollMenuView(selectedItem = selectedItem)
 }
 
 @Composable
-fun SelectSrollMenuView(selectedItem: String) {
+fun SelectScrollMenuView(selectedItem: String) {
     when (selectedItem) {
         Categories.TRANSACTIONS.value -> {
             AccountBalance()
         }
         else -> {
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
 
             }
         }
