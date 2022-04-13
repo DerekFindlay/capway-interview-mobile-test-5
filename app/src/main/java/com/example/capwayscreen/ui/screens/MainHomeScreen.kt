@@ -204,7 +204,6 @@ fun SelectScrollMenuView(selectedItem: String) {
     }
 }
 
-
 @Composable
 fun TransactionTabs() {
     val headers: List<String> = listOf("Transactions", "Deposits", "Withdrawals")
