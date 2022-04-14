@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.icons.Icons
@@ -208,6 +209,7 @@ fun SelectScrollMenuView(selectedItem: String) {
 fun TransactionTabs() {
     val headers: List<String> = listOf("Transactions", "Deposits", "Withdrawals")
     var selectedIndex by remember { mutableStateOf(0) }
+    var color: Color
 
     Column(
         modifier = Modifier
@@ -225,9 +227,14 @@ fun TransactionTabs() {
                     selected = selectedIndex == index,
                     onClick = { selectedIndex = index },
                     text = {
+                        color = if (selectedIndex == index) {
+                            Color.Black
+                        } else {
+                            Color.LightGray
+                        }
                         Text(
                             text = title,
-                            color = Color.Black
+                            color = color
                         )
                     },
 
@@ -268,7 +275,8 @@ fun TransactionView() {
     ) {
 
         Row {
-            SearchTransactionList(searchItem = searchVal)
+            SearchField(searchItem = searchVal)
+            //SearchTransactionList(searchItem = searchVal)
         }
         Row(Modifier.height(310.dp)) {
             TransactionListView(searchVal)
@@ -277,60 +285,69 @@ fun TransactionView() {
 }
 
 @Composable
-fun SearchTransactionList(searchItem: MutableState<TextFieldValue>) {
-    TextField(
+fun SearchField(searchItem: MutableState<TextFieldValue>) {
+    BasicTextField(
         value = searchItem.value,
+        singleLine = true,
         onValueChange = { searchItem.value = it },
-        placeholder = { Text("Search") },
-        modifier = Modifier
-            .fillMaxWidth()
+        textStyle = TextStyle(
+            color = Color.Black,
+            fontSize = 18.sp,
+        ), modifier = Modifier
             .padding(10.dp)
+            .height(45.dp)
             .border(
                 BorderStroke(2.dp, SolidColor(Color.LightGray)),
                 shape = RoundedCornerShape(45.dp)
             ),
-        textStyle = TextStyle(
-            Color.Black,
-            fontSize = 18.sp
-        ),
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Filled.Search,
-                contentDescription = "Search",
+        decorationBox = { innerTextField ->
+            Row(
                 modifier = Modifier
-                    .padding(15.dp)
-                    .size(24.dp)
-            )
-        },
-        trailingIcon = {
-            if (searchItem.value != TextFieldValue("")) {
-                IconButton(
-                    onClick = {
-                        searchItem.value = TextFieldValue("")
-                    }
-                ) {
+                    .fillMaxWidth()
+                    .height(55.dp)
+            ) {
+                if (searchItem.value == TextFieldValue("")) {
                     Icon(
-                        painter = painterResource(
-                            id = R.drawable.transact
-                        ),
-                        contentDescription = "Close",
+                        imageVector = Icons.Filled.Search,
+                        contentDescription = "Search",
                         modifier = Modifier
                             .padding(15.dp)
                             .size(24.dp)
                     )
+                    Text(
+                        text = "Search",
+                        color = Color.LightGray,
+                        fontSize = 18.sp,
+                        modifier = Modifier.offset(x = 0.dp, y = 9.dp)
+
+                    )
+                } else {
+                    IconButton(
+                        onClick = {
+                            searchItem.value = TextFieldValue("")
+                        },
+                        modifier = Modifier
+                            .offset(x = 320.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.transact
+                            ),
+                            contentDescription = "Close",
+                            modifier = Modifier
+                                .padding(15.dp)
+                                .size(24.dp)
+                        )
+                    }
                 }
             }
-        },
-        singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Black,
-            cursorColor = Color.White,
-            leadingIconColor = Color.Gray,
-            backgroundColor = Color.White,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent
-        )
+            Box(
+                modifier = Modifier
+                    .offset(x = 40.dp, y = 10.dp)
+            ) {
+                innerTextField()
+            }
+        }
     )
 }
 
