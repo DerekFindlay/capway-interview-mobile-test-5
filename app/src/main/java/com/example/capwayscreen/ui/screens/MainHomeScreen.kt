@@ -276,7 +276,6 @@ fun TransactionView() {
 
         Row {
             SearchField(searchItem = searchVal)
-            //SearchTransactionList(searchItem = searchVal)
         }
         Row(Modifier.height(310.dp)) {
             TransactionListView(searchVal)
@@ -319,7 +318,6 @@ fun SearchField(searchItem: MutableState<TextFieldValue>) {
                         color = Color.LightGray,
                         fontSize = 18.sp,
                         modifier = Modifier.offset(x = 0.dp, y = 9.dp)
-
                     )
                 } else {
                     IconButton(
