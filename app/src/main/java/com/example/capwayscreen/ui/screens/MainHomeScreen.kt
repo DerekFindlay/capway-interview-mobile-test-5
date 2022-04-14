@@ -293,7 +293,7 @@ fun SearchField(searchItem: MutableState<TextFieldValue>) {
             color = Color.Black,
             fontSize = 18.sp,
         ), modifier = Modifier
-            .padding(10.dp)
+            .padding(horizontal = 20.dp, vertical = 10.dp)
             .height(45.dp)
             .border(
                 BorderStroke(2.dp, SolidColor(Color.LightGray)),
@@ -310,7 +310,7 @@ fun SearchField(searchItem: MutableState<TextFieldValue>) {
                         imageVector = Icons.Filled.Search,
                         contentDescription = "Search",
                         modifier = Modifier
-                            .padding(15.dp)
+                            .padding(10.dp)
                             .size(24.dp)
                     )
                     Text(
@@ -325,7 +325,7 @@ fun SearchField(searchItem: MutableState<TextFieldValue>) {
                             searchItem.value = TextFieldValue("")
                         },
                         modifier = Modifier
-                            .offset(x = 320.dp)
+                            .offset(x = 300.dp)
                     ) {
                         Icon(
                             painter = painterResource(
